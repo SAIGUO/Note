@@ -123,4 +123,59 @@ RGB input（这个地方不是很清楚）
 打破分层线：
 
 地层线条过于完美和不自然，因此我们会加入噪音，打破它们并带来混乱。
-噪声在较低分辨率的网格上生成，并传输到雇用网格，以获得更大和更块状的模式。
+噪声在较低分辨率的网格上生成，并传输到雇用网格，以获得更大和更块状的模式。（为什么是在低分辨率网格上生成？）
+
+#### Split geometry
+悬崖表面根据噪音被分为两组。
+
+#### Stratification
+创造地质层：
+
+分层工具在具有不同种子值的两个组上运行以分解我们的分层线。
+
+### 4.Geometry shapes
+#### Shape
+挤压和位移:
+
+每个地层以不同的厚度挤出，并使用displacement maps的组合移位。
+
+#### Optimizing geometry
+减少三角形数量。
+
+#### Split for export
+几何被划分为扇区。每个颜色代表一个不同的扇区和一个用于导出的单个网格。
+
+### 5.Shading
+- 无需UV
+- X Y Z纹理投影
+- X&Y具有每个纹理的投影角度设置（高程和旋转）
+- 拾取地形纹理ID和颜色
+
+### 6.Cliffs terrain data
+Cliffs网格属性转移回地形。
+
+### 7.Cliffs terrain color
+从我们刚刚转移的strata属性，我们首先生成一个颜色层，它将在世界中创建一个宏观色调变化。
+
+### 8.Cliffs Erosion
+流动模拟：
+
+从我们转移到地形的cliff mask，我们通过运行流动模拟进一步扩展悬崖。 散落在悬崖表面上的点将沿着斜坡流下以产生侵蚀效果。 原始地层颜色保留在侵蚀区域。
+
+#### Crumbled rocks
+碎石散落在侵蚀面上
+
+#### Terrain texture
+从地形masks生成悬崖地形纹理ids。
+
+### 9.Vegetation growth surfaces
+悬崖表面可以有植被生长，但具有分离的有效表面。
+
+![growth_surfaces](https://github.com/SAIGUO/Note/blob/master/image/growth_surfaces.png)
+
+### 10.Export
+编辑器导出的数据：
+
+![cliff_export_data](https://github.com/SAIGUO/Note/blob/master/image/cliff_export_data.png)
+
+## 7- THE BIOME TOOL
