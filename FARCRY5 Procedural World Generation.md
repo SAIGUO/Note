@@ -46,3 +46,21 @@ fence工具的输入依然是spline，用户只需在样条参数上设置他想
 ## 5- THE PIPELINE
 使用可用的输入输出实现houdini与dunia之间的数据传输。
 ![fail](https://github.com/SAIGUO/Note/blob/master/image/data%20exchange.png)
+
+### Input
+#### From Dunia to Houdini
+- 一些输入通过python脚本从Dunia发送到Houdini
+
+  - World information
+  - File Paths
+  - Terrain sectors
+  - Splines and Shapes
+ 
+- 其他输入只是在磁盘上提取，可以使用Dunia提供的文件路径从Houdini读取
+
+  - Height maps (.raw)
+  - Biome painter (.png)
+  - 2D terrain masks (.png)
+  - Houdini Geometry (.geo or .bgeo)
+ 
+**Terrain是主要输入**
