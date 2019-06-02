@@ -48,7 +48,7 @@ fence工具的输入依然是spline，用户只需在样条参数上设置他想
 ![fail](https://github.com/SAIGUO/Note/blob/master/image/data%20exchange.png)
 
 ### Input
-#### From Dunia to Houdini
+From Dunia to Houdini
 - 一些输入通过python脚本从Dunia发送到Houdini
 
   - World information
@@ -72,3 +72,15 @@ Generation Area：
 - Section (256m x 256m) (位于编辑器中相机下方部分)
 - Sector (64m x 64m) (位于编辑器中相机下方部分)
 - Frustum (相机可见的所有扇区)
+
+![section](https://github.com/SAIGUO/Note/blob/master/image/section.png) 
+![frustum](https://github.com/SAIGUO/Note/blob/master/image/frustum.png)
+
+### Outputs
+From Houdini to Dunia
+- Entity point cloud
+- Terrain texture layers
+- Terrain height map layers
+- 2D terrain data (RGB or grayscale)
+- Geometry (procedurally generated)
+- Terrain Logic zones (用于环境预设和后期处理)
