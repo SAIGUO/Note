@@ -48,7 +48,7 @@ fence工具的输入依然是spline，用户只需在样条参数上设置他想
 ![fail](https://github.com/SAIGUO/Note/blob/master/image/data%20exchange.png)
 
 ### Input
-From Dunia to Houdini
+From Dunia to Houdini:
 - 一些输入通过python脚本从Dunia发送到Houdini
 
   - World information
@@ -63,7 +63,7 @@ From Dunia to Houdini
   - 2D terrain masks (.png)
   - Houdini Geometry (.geo or .bgeo)
  
-**Terrain是主要输入**
+**Terrain是主要输入。**
 
 ### Baking Procedural
 Generation Area：
@@ -77,7 +77,7 @@ Generation Area：
 ![frustum](https://github.com/SAIGUO/Note/blob/master/image/frustum.png)
 
 ### Outputs
-From Houdini to Dunia
+From Houdini to Dunia:
 - Entity point cloud
 - Terrain texture layers
 - Terrain height map layers
