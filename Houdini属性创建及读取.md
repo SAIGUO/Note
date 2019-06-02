@@ -46,7 +46,7 @@ ch函数可以有第二个参数，表示时间。
 线性顶点序号借助spreadsheet的顶点属性map offset观察。
 > 可以借助display options - markers - vertices - markers和numbers观察顶点
 
-![fc7457f8cc82578379c2eb8795d46e9c.png](en-resource://database/1625:1)
+![图片加载失败](image/ImgPar.png)
 
 ### Intrinsic属性
 普通属性存储在几何体上，占用空间，intrinsic属性仅在需要的时候计算出来。只有primitive及detail有intrinsic属性。
