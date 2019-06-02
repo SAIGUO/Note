@@ -64,3 +64,11 @@ fence工具的输入依然是spline，用户只需在样条参数上设置他想
   - Houdini Geometry (.geo or .bgeo)
  
 **Terrain是主要输入**
+
+### Baking Procedural
+Generation Area：
+- All (编辑器中加载的所有地形)
+- Map (1024m x 1024m) (位于编辑器中相机下方部分)
+- Section (256m x 256m) (位于编辑器中相机下方部分)
+- Sector (64m x 64m) (位于编辑器中相机下方部分)
+- Frustum (相机可见的所有扇区)
