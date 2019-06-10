@@ -45,7 +45,7 @@ fence工具的输入依然是spline，用户只需在样条参数上设置他想
 
 ## 5- THE PIPELINE
 使用可用的输入输出实现houdini与dunia之间的数据传输。
-![fail](https://github.com/SAIGUO/Note/blob/master/image/data%20exchange.png)
+![fail](./image/data%20exchange.png)
 
 ### 1.Input
 From Dunia to Houdini:
@@ -55,14 +55,14 @@ From Dunia to Houdini:
   - File Paths
   - Terrain sectors
   - Splines and Shapes
- 
+
 - 其他输入只是在磁盘上提取，可以使用Dunia提供的文件路径从Houdini读取
 
   - Height maps (.raw)
   - Biome painter (.png)
   - 2D terrain masks (.png)
   - Houdini Geometry (.geo or .bgeo)
- 
+
 **Terrain是主要输入。**
 
 ### 2.Baking Procedural
@@ -73,8 +73,8 @@ Generation Area：
 - Sector (64m x 64m) (位于编辑器中相机下方部分)
 - Frustum (相机可见的所有扇区)
 
-![section](https://github.com/SAIGUO/Note/blob/master/image/section.png) 
-![frustum](https://github.com/SAIGUO/Note/blob/master/image/frustum.png)
+![section](./image/section.png) 
+![frustum](./image/frustum.png)
 
 ### 3.Outputs
 From Houdini to Dunia:
@@ -99,12 +99,12 @@ From Houdini to Dunia:
 每个工具都会输出必要的masks影响下一个工具。
 如果一个工具需要输入前一个工具的结果，顺序将很重要。
 
-![cook_order](https://github.com/SAIGUO/Note/blob/master/image/cook_order.png)
+![cook_order](./image/cook_order.png)
 
 ## 6- THE CLIFF TOOL
 ### 1.Start up point
 Slope terrain data->Slope threshold->Cliffs input
-![terrain_slope](https://github.com/SAIGUO/Note/blob/master/image/terrain_slope.png)
+![terrain_slope](./image/terrain_slope.png)
 
 ### 2.Preparing geometry
 Remeshing: 由于地形网格在斜坡处会被拉伸，所以我们通过重新划分几何来获得均匀的三角形。
@@ -123,7 +123,7 @@ RGB input（这个地方不是很清楚）
 打破分层线：
 
 地层线条过于完美和不自然，因此我们会加入噪音，打破它们并带来混乱。
-噪声在较低分辨率的网格上生成，并传输到雇用网格，以获得更大和更块状的模式。（为什么是在低分辨率网格上生成？）
+噪声在较低分辨率的网格上生成，并传输到雇用网格，以获得更大和更块状的模式。<u>（为什么是在低分辨率网格上生成？）</u>
 
 #### Split geometry
 悬崖表面根据噪音被分为两组。
@@ -171,11 +171,79 @@ Cliffs网格属性转移回地形。
 ### 9.Vegetation growth surfaces
 悬崖表面可以有植被生长，但具有分离的有效表面。
 
-![growth_surfaces](https://github.com/SAIGUO/Note/blob/master/image/growth_surfaces.png)
+![growth_surfaces](./image/growth_surfaces.png)
 
 ### 10.Export
 编辑器导出的数据：
 
-![cliff_export_data](https://github.com/SAIGUO/Note/blob/master/image/cliff_export_data.png)
+![cliff_export_data](./image/cliff_export_data.png)
 
 ## 7- THE BIOME TOOL
+
+### 1.Generate Terrain Abiotic Data (非生物数据)
+
+![terrain_abiotic_data](./image/terrain_abiotic_data.png)
+
+从disk读取2D地形属性数据（PNGs）：
+
+- 生物群落图
+- 程序化生成的数据：Freshwater masks、Roads masks、Fences mask、Power lines mask、Cliffs mask 
+
+### 2.Process Main Biomes 
+
+主要生物群系将自动处理，而亚生物群系基于非生物地形数据。
+
+主要生物群系还处理其他奇特的事情，例如在用户放置电源线的位置用草地替换森林。
+
+### 3.Sub-Biomes Recipes
+
+![sub_biomes_recipes.png](.\image\sub_biomes_recipes.png) 
+
+#### Generate terrain entities 
+
+- 地形上的分散实体（点云）
+- 修改和创建地形属性
+- 确定每个物种的生存能力
+
+### 4.Viability (生存能力)
+
+通过为每个物种设置有利的地形属性来定义生存能力。积累最大生存能力的物种将胜出。
+
+（viability设定具体看PDF文档P77）
+
+#### 结合viability radius选择胜出物种
+
+当viability低的物种位于viability高的物种的viability radius范围内时，将被丢弃。
+
+#### Priority Radius 
+
+如果有优先级，将首先处理优先级。如果优先级相同则使用生存能力代替。
+
+<u>（这个地方的图文没看懂）</u>
+
+### 5.Combine terrain data 
+
+自然界中存在一些现象，如陡坡上的流线上、山脉的南面几乎没有植被生长。为了得到相似的现象，我们通常会将不同的非生物地形数据结合起来。
+
+![occlusion&altitude](.\image\occlusion&altitude.png)
+
+![flow&altitude](.\image\flow&altitude.png)
+
+将上面得到的两个结果结合：
+
+![occlusion&altitude&flow](D:\Github\Note\image\occlusion&altitude&flow.png)
+
+#### Noises
+
+通常通过在地形数据中加入噪声来产生额外的混乱。
+
+![noises](D:\Github\Note\image\noises.png)
+
+#### Exclusion masks 
+
+加入以前工具（如淡水，道路或悬崖）产生的各种排除面具。
+
+![exclusion_masks](D:\Github\Note\image\exclusion_masks.png)
+
+最后的结果将作为物种生存能力。结合地形数据是生物群落生成工作流程的核心。 通过混合各种地形属性，我们可以为物种分布创建非常特定的模式，并积累波动的生存能力，有助于将各种物种有机地混合在一起。
+
